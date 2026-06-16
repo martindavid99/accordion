@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Children, useState } from "react";
 import "./styles.css";
 
 const faqs = [
@@ -34,16 +34,17 @@ function Accordion({ data }) {
           curOpen={curOpen}
           onOpen={setIsOpen}
           title={el.title}
-          text={el.text}
           num={i}
           key={el.title}
-        />
+        >
+          {el.text}
+        </AccordionItem>
       ))}
     </div>
   );
 }
 
-function AccordionItem({ num, title, text, curOpen, onOpen }) {
+function AccordionItem({ num, title, curOpen, onOpen, children }) {
   const isOpen = num === curOpen;
 
   function handleClick() {
@@ -55,7 +56,7 @@ function AccordionItem({ num, title, text, curOpen, onOpen }) {
       <p className="number">{num < 9 ? `0${num + 1}` : num + 1}</p>
       <p className="text">{title}</p>
       <p className="icon">{isOpen ? "-" : "+"}</p>
-      {isOpen && <div className="content-box">{text}</div>}
+      {isOpen && <div className="content-box">{children}</div>}
     </div>
   );
 }
